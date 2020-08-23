@@ -19,31 +19,49 @@ mainEntry = Entry(window, width=100)
 mainEntry.insert(0, str(sum))
 mainEntry.grid(column = 0, row = 4, ipady = 20, columnspan = 20)
  
+def updateMainEntry(event, lbl):
+    mainEntry.delete(0, END)
+    mainEntry.insert(0, lbl["text"])
+
 
 
 hexTitle = Label(window, text = "HEX  |", font=("Consolas", 9))
 hexTitle.grid(column = 0, row = 6)
 
+
 hexValue = Label(window, text = "0")
 hexValue.grid(column = 1, row = 6, sticky = W)
+hexValue.bind("<Button-1>", partial(updateMainEntry, lbl = hexValue))
+
+hexTitle.bind("<Button-1>", partial(updateMainEntry, lbl = hexValue))
 
 decTitle= Label(window, text = "DEC  |", font=("Consolas", 9))
 decTitle.grid(column = 0, row = 7)
 
 decValue = Label(window, text = "0")
 decValue.grid(column = 1, row = 7, sticky = W)
+decValue.bind("<Button-1>", partial(updateMainEntry, lbl = decValue))
+
+decTitle.bind("<Button-1>", partial(updateMainEntry, lbl = decValue))
 
 octTitle = Label(window, text = "OCT  |", font=("Consolas", 9))
 octTitle.grid(column = 0, row = 8)
 
+
 octValue = Label(window, text = "0")
 octValue.grid(column = 1, row = 8, sticky = W)
+octValue.bind("<Button-1>", partial(updateMainEntry, lbl = octValue))
+
+octTitle.bind("<Button-1>", partial(updateMainEntry, lbl = octValue))
 
 binTitle = Label(window, text = "BIN  |", font=("Consolas", 9))
 binTitle.grid(column = 0, row = 9)
 
 binValue = Label(window, text = "0")
 binValue.grid(column = 1, row = 9, sticky = W)
+binValue.bind("<Button-1>", partial(updateMainEntry, lbl = binValue))
+
+binTitle.bind("<Button-1>", partial(updateMainEntry, lbl = binValue))
 
 
 
@@ -62,11 +80,25 @@ def valueChange(index, theButton):
         sum = sum + pow(2, index)
     mainEntry.delete(0, END)
     mainEntry.insert(0, str(sum))
+    decValue["text"] = str(sum)
+    binValue["text"] = str(decimalToBinary(sum))
+    hexValue["text"] = str(decimaltoHex(sum))
+    octValue["text"] = str(decimaltoOct(sum))
     print(sum)
 
 def swapAndValueChange(theButton, index):
     swapDigit(theButton)
     valueChange(index, theButton)
+
+def decimalToBinary(number):
+    return bin(number).replace("0b","")
+
+def decimaltoHex(number):
+    return hex(number).replace("0x", "")
+
+def decimaltoOct(number):
+    return oct(number).replace("0o", "")
+
 
 
 
