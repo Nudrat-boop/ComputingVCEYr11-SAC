@@ -117,31 +117,31 @@ bit8.config(command = partial(swapAndValueChange, bit8, 8))
 bit8.grid(column = 8, row= 11)
 
 bit9 = Button(window, text = "0")
-bit9.config(command = partial(swapDigit, bit9))
+bit9.config(command = partial(swapAndValueChange, bit9, 9))
 bit9.grid(column = 7, row = 11)
 
 bit10= Button(window, text = "0")
-bit10.config(command = partial(swapDigit, bit10))
+bit10.config(command = partial(swapAndValueChange, bit10, 10))
 bit10.grid(column = 6, row = 11)
 
 bit11= Button(window, text = "0")
-bit11.config(command = partial(swapDigit, bit11))
+bit11.config(command = partial(swapAndValueChange, bit11, 11))
 bit11.grid(column = 5, row = 11)
 
 bit12 = Button(window, text = "0")
-bit12.config(command = partial(swapDigit, bit12))
+bit12.config(command = partial(swapAndValueChange, bit12, 12))
 bit12.grid(column = 3, row= 11)
 
 bit13 = Button(window, text = "0")
-bit13.config(command = partial(swapDigit, bit13))
+bit13.config(command = partial(swapAndValueChange, bit13, 13))
 bit13.grid(column = 2, row = 11)
 
 bit14= Button(window, text = "0")
-bit14.config(command = partial(swapDigit, bit14))
+bit14.config(command = partial(swapAndValueChange, bit14, 14))
 bit14.grid(column = 1, row = 11)
 
 bit15= Button(window, text = "0")
-bit15.config(command = partial(swapDigit, bit15))
+bit15.config(command = partial(swapAndValueChange, bit15, 15))
 bit15.grid(column = 0, row = 11)
  
 lbl1= Label(window, text = "0", font=("Consolas", 10 , "italic"))
