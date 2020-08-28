@@ -5,16 +5,63 @@ from functools import partial
 window = Tk() 
 
 window.title("Programming Calculator")
-
 window.geometry('1000x600')
-window.config(bg= "#4432a8")
+window.config(bg= "#114B5F")
 
 
 
-titleLable = Label(window, text = "Programming Calculator", font=("Consolas", 13, "bold","italic"), fg = "#ffffff", bg = "#4432a8")
+titleLable = Label(window, text = "Programming Calculator", font=("Consolas", 13, "bold","italic"), fg = "#ffffff", bg= "#114B5F")
 titleLable.grid(column = 0, row= 2, columnspan = 10, sticky = W)
  
 sum = 0
+
+canvas3 = Canvas(window, width = 200, height = 100, bg = "#114B5F", borderwidth = 0, highlightthickness = 0)
+canvas3.grid(row = 11, column = 10, columnspan = 4, rowspan = 5)
+
+canvas2 = Canvas(window, width = 200, height = 100, bg = "#114B5F", borderwidth = 0, highlightthickness = 0)
+canvas2.grid(row = 11, column = 5, columnspan = 4, rowspan = 5)
+
+canvas4 = Canvas(window, width = 200, height = 100, bg = "#114B5F", borderwidth = 0, highlightthickness = 0)
+canvas4.grid(row = 11, column = 15, columnspan = 4, rowspan = 5)
+
+canvas1 = Canvas(window, width = 200, height = 100, bg = "#114B5F", borderwidth = 0, highlightthickness = 0)
+canvas1.grid(row = 11, column = 0, columnspan = 4, rowspan = 5)
+
+window.grid_rowconfigure(10, minsize = 20)
+
+def round_rectangle(canvas, x1, y1, x2, y2, radius=25, **kwargs):
+
+    points = [x1+radius, y1,
+              x1+radius, y1,
+              x2-radius, y1,
+              x2-radius, y1,
+              x2, y1,
+              x2, y1+radius,
+              x2, y1+radius,
+              x2, y2-radius,
+              x2, y2-radius,
+              x2, y2,
+              x2-radius, y2,
+              x2-radius, y2,
+              x1+radius, y2,
+              x1+radius, y2,
+              x1, y2,
+              x1, y2-radius,
+              x1, y2-radius,
+              x1, y1+radius,
+              x1, y1+radius,
+              x1, y1]
+
+    return canvas.create_polygon(points, **kwargs, smooth=True)
+
+rectangle3 = round_rectangle(canvas3, 0, 0, 200, 100, radius=20, fill="#999999")
+
+rectangle2 = round_rectangle(canvas2, 0, 0, 200, 100, radius=20, fill="#999999")
+
+rectangle4 = round_rectangle(canvas4, 0, 0, 200, 100, radius=20, fill="#999999")
+
+rectangle1 = round_rectangle(canvas1, 0, 0, 200, 100, radius=20, fill="#999999")
+
 
 mainEntry = Entry(window, width=100, font=("Consolas", 14), bg = "#4432a8")
 mainEntry.insert(0, str(sum))
@@ -27,46 +74,65 @@ def updateMainEntry(event, lbl):
     mainEntry.insert(0, lbl["text"])
     mainEntry.config(state = "readonly")
 
+def highlight(event, thisField):
+    thisField.config(bg = "#E6E6E6", fg = "#000000")
+
+def stopHighlight(event, thisField):
+    thisField.config(bg= "#114B5F", fg = "#ffffff")
+
+hexTitle = Label(window, text = "HEX |", font=("Consolas", 12, "bold"), bg= "#114B5F", fg = "#ffffff")
+hexTitle.grid(sticky = W, column = 0, columnspan = 2, row = 6)
 
 
-hexTitle = Label(window, text = "HEX  |", font=("Consolas", 9), bg = "#4432a8")
-hexTitle.grid(column = 0, row = 6)
-
-
-hexValue = Label(window, text = "0", bg = "#4432a8")
+hexValue = Label(window, text = "0", bg= "#114B5F", fg = "#ffffff", font=("Consolas", 12, "bold"))
 hexValue.grid(column = 1, row = 6, sticky = W, columnspan = 10)
 hexValue.bind("<Button-1>", partial(updateMainEntry, lbl = hexValue))
+hexValue.bind("<Enter>", partial(highlight, thisField = hexValue))
+hexValue.bind("<Leave>", partial(stopHighlight, thisField = hexValue))
 
 hexTitle.bind("<Button-1>", partial(updateMainEntry, lbl = hexValue))
+hexTitle.bind("<Enter>", partial(highlight, thisField = hexValue))
+hexTitle.bind("<Leave>", partial(stopHighlight, thisField = hexValue))
 
-decTitle= Label(window, text = "DEC  |", font=("Consolas", 9), bg = "#4432a8")
-decTitle.grid(column = 0, row = 7)
+decTitle= Label(window, text = "DEC |", font=("Consolas", 12, "bold"), bg= "#114B5F", fg = "#ffffff")
+decTitle.grid(sticky = W, column = 0, columnspan = 2,  row = 7)
 
-decValue = Label(window, text = "0", bg = "#4432a8")
+decValue = Label(window, text = "0", bg= "#114B5F", fg = "#ffffff", font=("Consolas", 12, "bold"))
 decValue.grid(column = 1, row = 7, sticky = W, columnspan = 10)
 decValue.bind("<Button-1>", partial(updateMainEntry, lbl = decValue))
+decValue.bind("<Enter>", partial(highlight, thisField = decValue))
+decValue.bind("<Leave>", partial(stopHighlight, thisField = decValue))
 
 decTitle.bind("<Button-1>", partial(updateMainEntry, lbl = decValue))
+decTitle.bind("<Enter>", partial(highlight, thisField = decValue))
+decTitle.bind("<Leave>", partial(stopHighlight, thisField = decValue))
 
-octTitle = Label(window, text = "OCT  |", font=("Consolas", 9), bg = "#4432a8")
-octTitle.grid(column = 0, row = 8)
+octTitle = Label(window, text = "OCT |", font=("Consolas", 12, "bold"), bg= "#114B5F", fg = "#ffffff")
+octTitle.grid(sticky = W, column = 0, columnspan = 2,  row = 8)
 
 
-octValue = Label(window, text = "0", bg = "#4432a8")
+octValue = Label(window, text = "0", bg= "#114B5F", fg = "#ffffff", font=("Consolas", 12, "bold"))
 octValue.grid(column = 1, row = 8, sticky = W, columnspan = 10)
 octValue.bind("<Button-1>", partial(updateMainEntry, lbl = octValue))
+octValue.bind("<Enter>", partial(highlight, thisField = octValue))
+octValue.bind("<Leave>", partial(stopHighlight, thisField = octValue))
 
 octTitle.bind("<Button-1>", partial(updateMainEntry, lbl = octValue))
+octTitle.bind("<Enter>", partial(highlight, thisField = octValue))
+octTitle.bind("<Leave>", partial(stopHighlight, thisField = octValue))
 
-binTitle = Label(window, text = "BIN  |", font=("Consolas", 9), bg = "#4432a8")
-binTitle.grid(column = 0, row = 9)
+binTitle = Label(window, text = "BIN |", font=("Consolas", 12, "bold"), bg= "#114B5F", fg = "#ffffff")
+binTitle.grid(sticky = W, column = 0, columnspan = 2,  row = 9)
 
-binValue = Label(window, text = "0", bg = "#4432a8")
+binValue = Label(window, text = "0", bg= "#114B5F", fg = "#ffffff", font=("Consolas", 12, "bold"))
 binValue.grid(column = 1, row = 9, sticky = W, columnspan = 10)
 binValue.bind("<Button-1>", partial(updateMainEntry, lbl = binValue))
+binValue.bind("<Enter>", partial(highlight, thisField = binValue))
+binValue.bind("<Leave>", partial(stopHighlight, thisField = binValue))
 
 binTitle.bind("<Button-1>", partial(updateMainEntry, lbl = binValue))
-
+binTitle.bind("<Enter>", partial(highlight, thisField = binValue))
+binTitle.bind("<Leave>", partial(stopHighlight, thisField = binValue))
 
 
 def swapDigit(theButton):
@@ -193,6 +259,8 @@ lbl3.grid(column = 8, row = 12)
 
 lbl4 = Label(window, text = "12", font=("Consolas", 10, "italic"), bg = "#66656e", fg = "#ffffff")
 lbl4.grid(column = 3, row = 12)
+
+
 
 
 
