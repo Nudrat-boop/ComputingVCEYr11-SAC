@@ -1,17 +1,23 @@
+#Function: Programming Calculator
+#Input: bits
+#Output: The bits' hexadecimal, binary,octadecomal and decimal values 
+
 from tkinter import*
 
 from functools import partial
+
+from pathlib import Path
 
 window = Tk() 
 
 window.title("Programming Calculator")
 window.geometry('1000x600')
 window.config(bg= "#114B5F")
+window.iconbitmap(str(folder) + "/projecticon.ico")
 
 
-
-titleLable = Label(window, text = "Programming Calculator", font=("Consolas", 13, "bold","italic"), fg = "#ffffff", bg= "#114B5F")
-titleLable.grid(column = 0, row= 2, columnspan = 10, sticky = W)
+titleLable = Label(window, text = "Programming Calculator", font=("Consolas", 18, "bold","italic"), fg = "#ffffff", bg= "#114B5F")
+titleLable.grid(column = 7, row= 2, columnspan = 10, sticky = W)
  
 sum = 0
 
@@ -263,6 +269,22 @@ lbl4.grid(column = 3, row = 12)
 
 
 
+
+
+def openFile(file):
+    folder = Path.cwd()
+    window.destroy()
+    exec(open(str(folder)+"/"+file).read(), globals())
+
+standardBtn = Button(window, text = "Standard", font = ("Helvetica", 12, "bold"), fg = "#ffffff", bg = "#F45B69", width = 15, command = partial(openFile, "standardCalculator.py"))
+standardBtn.grid(column = 0, row = 0, columnspan = 4, sticky = E)
+
+homepageBtn = Button(window, text = "Homepage", font = ("Helvetica", 12, "bold"), fg = "#ffffff", bg = "#F45B69", width = 15, command = partial(openFile, "homepage.py"))
+homepageBtn.grid(column = 7, row = 0, columnspan = 4)
+
+scientificBtn = Button(window, text = "Scientific", font = ("Helvetica", 12, "bold"), fg = "#ffffff", bg = "#F45B69", width = 15, command = partial(openFile, "SACGUI.ScientificCalculator.py"))
+scientificBtn.grid(column = 14, row = 0, columnspan = 4)
+window.mainloop()
 
 
 
